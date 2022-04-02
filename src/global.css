@@ -1,0 +1,38 @@
+:root {
+  /* color */
+  --accent: hsl(142, 76%, 36%);
+  --gray-200: hsl(220, 13%, 91%);
+}
+
+body {
+  /* color */
+  --main: hsl(0, 0%, 100%);
+  --secondary: hsl(0, 0%, 0%);
+  font-family: "Outfit", sans-serif;
+  background-color: var(--gray-100);
+  color: var(--gray-400);
+  font-weight: var(--font-weight-light);
+  overflow: hidden;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  inset: 0;
+}
+
+body.dark {
+  --main: hsl(0, 0%, 0%);
+  --secondary: hsl(0, 0%, 100%);
+}
+
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: auto;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}

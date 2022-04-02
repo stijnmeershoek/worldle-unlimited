@@ -1,38 +1,138 @@
-.App {
-  text-align: center;
+#app {
+  width: 30%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#app svg {
+  width: auto;
+  max-height: min(25vh, 225px);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+#app header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--gray-200);
+  margin-bottom: 25px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+#app header div {
+  display: flex;
+}
+
+#app header > div *:first-child {
+  margin-right: 5px;
+}
+
+#app header img {
+  height: 20px;
+}
+
+#app header h1 {
+  text-transform: uppercase;
+  font-size: 2.25rem;
+  letter-spacing: 3px;
+}
+
+#app header h1 span {
+  color: var(--accent);
+}
+
+.country {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.guesses {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.guess-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.guess-grid > div {
+  background-color: var(--gray-200);
+  height: 30px;
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.make-guess {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.autocomplete {
+  position: relative;
+  width: 100%;
+}
+
+.autocomplete input {
+  width: inherit;
+  font-weight: 300;
+  padding-block: 2px;
+  border: 2px solid var(--gray-200);
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+.autocomplete .suggestions {
+  position: absolute;
+  bottom: 100%;
+  max-height: 20vh;
+  overflow-y: auto;
+  background-color: var(--gray-200);
+  padding: 10px 5px;
+  width: inherit;
+}
+
+.autocomplete .suggestions > li {
+  background-color: white;
+  margin-bottom: 5px;
+  font-weight: 300;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.guess-country {
+  width: 100%;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  border: 2px solid var(--gray-200);
+  outline: none;
+  background-color: white;
+  padding-block: 2px;
+  border-radius: 5px;
 }
 
-.App-link {
-  color: #61dafb;
+.guess-country:hover {
+  background-color: hsl(220 13% 91% / 0.25);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.guess-country:focus-visible {
+  border: 2px solid black;
+}
+
+.guess-country img {
+  max-height: 1rem;
+  margin-right: 5px;
 }

@@ -1,25 +1,58 @@
-import logo from './logo.svg';
-import './App.css';
+import "./app.css";
+import React from "react";
+import Twemoji from "react-twemoji";
+import { useAppState } from "./context/AppContext";
+import { Icon } from "./components/Icon";
+import { AutoComplete } from "./components/AutoComplete";
 
-function App() {
+export default function App() {
+  const { country } = useAppState();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <>
+      <header>
+        <div>
+          <Twemoji options={{ className: "twemoji" }}>
+            <span>❓</span>
+          </Twemoji>
+          <Twemoji options={{ className: "twemoji" }}>
+            <span>📲</span>
+          </Twemoji>
+        </div>
+        <h1>
+          WOR<span>L</span>DLE
+        </h1>
+        <div>
+          <Twemoji options={{ className: "twemoji" }}>
+            <span>📈</span>
+          </Twemoji>
+          <Twemoji options={{ className: "twemoji" }}>
+            <span>⚙️</span>
+          </Twemoji>
+        </div>
       </header>
-    </div>
+      <div className="country">
+        <Icon name={country.code.toLowerCase()} />
+      </div>
+      <div className="guesses">
+        <div className="guess-grid">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <div className="make-guess">
+          <AutoComplete />
+          <button className="guess-country">
+            <Twemoji options={{ className: "twemoji" }}>
+              <span>🌍</span>
+            </Twemoji>
+            GUESS
+          </button>
+        </div>
+      </div>
+    </>
   );
 }
-
-export default App;
