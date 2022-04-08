@@ -8,8 +8,8 @@ export const AutoComplete = () => {
   const [value, setValue] = useState("");
 
   const handleChange = (e) => {
+    setValue(e.target.value);
     const query = e.target.value.toLowerCase();
-    setValue(query);
     if (query.length > 1) {
       const filterSuggestions = COUNTRIES.filter((suggestion) => suggestion.name.toLowerCase().indexOf(query) > -1);
       setSuggestions(filterSuggestions);
@@ -41,8 +41,8 @@ export const AutoComplete = () => {
       setSuggestionIndex(suggestionIndex + 1);
     }
     // ENTER
-    else if (e.keyCode === 13) {
-      setValue(suggestions[suggestionIndex]);
+    else if (e.keyCode === 9) {
+      setValue(suggestions[suggestionIndex].name);
       setSuggestionIndex(0);
       setSuggestionsActive(false);
     }
@@ -50,7 +50,7 @@ export const AutoComplete = () => {
 
   const Suggestions = () => {
     return (
-      <ul className="suggestions" role="list">
+      <ul className="suggestions">
         {suggestions.map((suggestion, index) => {
           return (
             <li className={index === suggestionIndex ? "active" : ""} key={index} onClick={handleClick}>
@@ -64,7 +64,7 @@ export const AutoComplete = () => {
 
   return (
     <div className="autocomplete">
-      <input type="text" value={value} onChange={handleChange} onKeyDown={handleKeyDown} />
+      <input type="text" value={value} onChange={handleChange} onKeyDown={handleKeyDown} name="guess" placeholder="Country, territory..." />
       {suggestionsActive && <Suggestions />}
     </div>
   );

@@ -1,7 +1,10 @@
 :root {
   /* color */
   --accent: hsl(142, 76%, 36%);
+  --accent-hover: hsl(142, 71%, 45%);
   --gray-200: hsl(220, 13%, 91%);
+  --font-weight-light: 300;
+  --font-weight-heavy: bold;
 }
 
 body {

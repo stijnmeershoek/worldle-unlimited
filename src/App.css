@@ -1,5 +1,6 @@
 #app {
-  width: 30%;
+  width: clamp(500px, 30%, 500px);
+  min-height: 700px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -23,12 +24,21 @@
   display: flex;
 }
 
+#app header > div:first-of-type {
+  margin-left: 10px;
+}
+
+#app header > div:last-of-type {
+  margin-right: 10px;
+}
+
 #app header > div *:first-child {
   margin-right: 5px;
 }
 
 #app header img {
   height: 20px;
+  cursor: pointer;
 }
 
 #app header h1 {
@@ -39,6 +49,45 @@
 
 #app header h1 span {
   color: var(--accent);
+}
+
+.alert-container {
+  position: fixed;
+  top: 10vh;
+  left: 50vw;
+  transform: translateX(-50%);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.alert {
+  pointer-events: none;
+  user-select: none;
+  background-color: hsl(0, 0%, 100%);
+  box-shadow: 0 1px 10px 0 rgb(0 0 0 / 10%), 0 2px 15px 0 rgb(0 0 0 / 5%);
+  padding: 1em 2em;
+  border-radius: 0.25em;
+  opacity: 1;
+  transition: opacity 500ms ease-in-out;
+  margin-bottom: 0.5em;
+  display: flex;
+}
+
+.alert svg {
+  height: 24px;
+  aspect-ratio: 1;
+  margin-right: 20px;
+}
+
+.alert:last-child {
+  margin-bottom: 0;
+}
+
+.alert.hide {
+  opacity: 0;
 }
 
 .country {
@@ -60,17 +109,42 @@
 .guess-grid {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 0.25em;
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: 0.5em;
 }
 
-.guess-grid > div {
+.guess-grid > div.blank-guess-row {
   background-color: var(--gray-200);
   height: 30px;
-  padding: 10px;
+  padding: 1em;
   width: 100%;
   border-radius: 5px;
+}
+
+.guess-grid > div.guess-row {
+  background-color: transparent;
+  min-height: 32px;
+  width: 100%;
+  border-radius: 5px;
+  display: grid;
+  grid-template-columns: 3fr 2fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 5px;
+}
+
+.guess-grid > div.guess-row img {
+  height: 15px;
+}
+
+.guess-grid > div.guess-row > div {
+  border: 2px solid var(--gray-200);
+  height: 100%;
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .make-guess {
@@ -88,27 +162,31 @@
 .autocomplete input {
   width: inherit;
   font-weight: 300;
-  padding-block: 2px;
+  padding: 0.3em;
   border: 2px solid var(--gray-200);
   border-radius: 5px;
   margin-bottom: 5px;
+  cursor: text;
 }
 
 .autocomplete .suggestions {
   position: absolute;
   bottom: 100%;
-  max-height: 20vh;
+  max-height: 25vh;
   overflow-y: auto;
   background-color: var(--gray-200);
-  padding: 10px 5px;
+  padding-top: 10px;
+  padding-inline: 5px;
   width: inherit;
+  margin: 0;
 }
 
 .autocomplete .suggestions > li {
   background-color: white;
-  margin-bottom: 5px;
+  margin-bottom: 0.25em;
   font-weight: 300;
-  font-size: 1.2rem;
+  font-size: 1rem;
+  text-transform: uppercase;
   cursor: pointer;
 }
 
@@ -120,8 +198,9 @@
   border: 2px solid var(--gray-200);
   outline: none;
   background-color: white;
-  padding-block: 2px;
+  padding: 0.3em;
   border-radius: 5px;
+  font-weight: bold;
 }
 
 .guess-country:hover {
@@ -135,4 +214,50 @@
 .guess-country img {
   max-height: 1rem;
   margin-right: 5px;
+}
+
+.share-button {
+  background-color: var(--accent);
+  text-transform: uppercase;
+  width: 100%;
+  border: none;
+  outline: none;
+  color: hsl(0, 0%, 100%);
+  font-weight: 500;
+  border-radius: 5px;
+  height: 32px;
+}
+
+.share-button:hover,
+.share-button:focus-visible {
+  background-color: var(--accent-hover);
+}
+
+.view-on-maps {
+  margin-top: 25px;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.view-on-maps img {
+  height: 24px;
+}
+
+.view-on-maps a {
+  color: inherit;
+  text-decoration: underline;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  #app {
+    width: 100%;
+  }
+
+  .guesses {
+    padding: 10px;
+  }
 }
