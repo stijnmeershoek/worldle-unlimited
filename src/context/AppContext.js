@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { COUNTRIES } from "../globals/COUNTRIES";
+import { countriesWithImage } from "../globals/COUNTRIES";
 
 const AppContext = createContext();
 
@@ -13,7 +13,7 @@ export function AppProvider({ children }) {
 
   useEffect(() => {
     async function generateCountry() {
-      const randomCountry = COUNTRIES[Math.floor(Math.random() * COUNTRIES.length)];
+      const randomCountry = countriesWithImage[Math.floor(Math.random() * countriesWithImage.length)];
       setCountry(randomCountry);
       setLoading(false);
     }

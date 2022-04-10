@@ -44,7 +44,7 @@
 #app header h1 {
   text-transform: uppercase;
   font-size: 2.25rem;
-  letter-spacing: 3px;
+  letter-spacing: 2px;
 }
 
 #app header h1 span {
@@ -122,6 +122,27 @@
   border-radius: 5px;
 }
 
+.guess-grid > div.guess-row.animated {
+  grid-template-columns: 6fr 1fr;
+}
+
+.guess-grid > div.guess-row.animated > :first-child {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.guess-grid > div.guess-row.animated .square {
+  -webkit-animation: reveal 0.2s forwards;
+  animation: reveal 0.2s forwards;
+  opacity: 0;
+  user-select: none;
+}
+
+.guess-grid > div.guess-row.animated > :first-child img {
+  height: 25px;
+}
+
 .guess-grid > div.guess-row {
   background-color: transparent;
   min-height: 32px;
@@ -145,6 +166,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.guess-grid > div.guess-row > div:first-of-type {
+  text-transform: uppercase;
+  overflow: hidden;
+}
+
+.guess-grid > div.guess-row > div:first-of-type p {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .make-guess {
@@ -252,6 +284,60 @@
   cursor: pointer;
 }
 
+@-webkit-keyframes reveal {
+  0% {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes reveal {
+  0% {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes pop {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+
+  75% {
+    -webkit-transform: scale(1.25);
+    transform: scale(1.25);
+  }
+
+  to {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+@keyframes pop {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+
+  75% {
+    -webkit-transform: scale(1.25);
+    transform: scale(1.25);
+  }
+
+  to {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
 @media screen and (max-width: 768px) {
   #app {
     width: 100%;
@@ -259,5 +345,15 @@
 
   .guesses {
     padding: 10px;
+  }
+
+  .alert-container {
+    top: 0;
+    width: 100%;
+  }
+
+  .alert {
+    width: 100%;
+    padding-block: 1.5em;
   }
 }

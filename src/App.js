@@ -1,7 +1,7 @@
 import "./app.css";
 import React, { useState } from "react";
 import Twemoji from "react-twemoji";
-import { COUNTRIES } from "./globals/COUNTRIES";
+import { countries } from "./globals/COUNTRIES";
 import * as geolib from "geolib";
 import { useAppState } from "./context/AppContext";
 import { Icon } from "./components/Icon";
@@ -14,15 +14,27 @@ export default function App() {
   const [finished, setFinished] = useState(false);
   const [alerts, setAlerts] = useState([]);
   const [guesses, addGuess] = useState([]);
+  const [clear, setClear] = useState(false);
   const MAX_DISTANCE_ON_EARTH = 20_000_000;
   const MAX_TRIES = 6;
 
   const submitGuess = (e) => {
     e.preventDefault();
-    if (guesses.length >= 6) return;
+    setClear(true);
     const guessValue = e.target.guess.value;
-    const guess = COUNTRIES.filter((country) => country.name.toLowerCase() === guessValue.toLowerCase())[0];
-    if (COUNTRIES.some((country) => country.name.toLowerCase() === guessValue.toLowerCase())) {
+    const guess = countries.filter((country) => country.name.toLowerCase() === guessValue.toLowerCase())[0];
+    if (guesses.length + 1 === 6 && guessValue.toLowerCase() !== country.name.toLowerCase()) {
+      setFinished(true);
+      showAlert(country.name.toUpperCase(), null, "failed");
+      const GUESS = {
+        name: guessValue,
+        distance: 0,
+        proximity: 100,
+      };
+      addGuess((prev) => [...prev, GUESS]);
+      return;
+    }
+    if (countries.some((country) => country.name.toLowerCase() === guessValue.toLowerCase())) {
       if (guessValue.toLowerCase() === country.name.toLowerCase()) {
         setFinished(true);
         const GUESS = {
@@ -30,7 +42,9 @@ export default function App() {
           distance: 0,
           proximity: 100,
         };
+        showAlert("Well Done!", null, "correct");
         addGuess((prev) => [...prev, GUESS]);
+        return;
       } else {
         const distance = geolib.getDistance({ latitude: guess.latitude, longitude: guess.longitude }, { latitude: country.latitude, longitude: country.longitude });
         const GUESS = {
@@ -40,22 +54,22 @@ export default function App() {
           proximity: Math.floor((Math.max(MAX_DISTANCE_ON_EARTH - distance, 0) / MAX_DISTANCE_ON_EARTH) * 100),
         };
         addGuess((prev) => [...prev, GUESS]);
+        return;
       }
     } else {
-      showAlert("Invalid Country", 1000);
+      showAlert("Invalid Country", 1000, "invalid");
     }
   };
 
-  const showAlert = (message, duration = 1000) => {
-    if (duration == null) return;
-    setAlerts((prevAlerts) => [...prevAlerts, { message: message, duration: duration }]);
+  const showAlert = (message, duration = 1000, type) => {
+    setAlerts((prevAlerts) => [...prevAlerts, { message: message, duration: duration, type: type }]);
   };
 
   return (
     <>
       <div className="alert-container">
         {alerts.map((alert) => {
-          return <Alert message={alert.message} duration={alert.duration} />;
+          return <Alert message={alert.message} duration={alert.duration} type={alert.type} />;
         })}
       </div>
       <header>
@@ -90,7 +104,7 @@ export default function App() {
         </div>
         {!finished ? (
           <form className="make-guess" onSubmit={submitGuess}>
-            <AutoComplete />
+            <AutoComplete clear={clear} setClear={setClear} />
             <button type="submit" className="guess-country">
               <Twemoji options={{ className: "twemoji" }}>
                 <span>🌍</span>

@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { COUNTRIES } from "../../globals/COUNTRIES";
+import { useState, useEffect } from "react";
+import { countries } from "../../globals/COUNTRIES";
 
-export const AutoComplete = () => {
+export const AutoComplete = ({ clear, setClear }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [suggestionIndex, setSuggestionIndex] = useState(0);
   const [suggestionsActive, setSuggestionsActive] = useState(false);
@@ -11,7 +11,7 @@ export const AutoComplete = () => {
     setValue(e.target.value);
     const query = e.target.value.toLowerCase();
     if (query.length > 1) {
-      const filterSuggestions = COUNTRIES.filter((suggestion) => suggestion.name.toLowerCase().indexOf(query) > -1);
+      const filterSuggestions = countries.filter((suggestion) => suggestion.name.toLowerCase().indexOf(query) > -1);
       setSuggestions(filterSuggestions);
       setSuggestionsActive(true);
     } else {
@@ -21,7 +21,7 @@ export const AutoComplete = () => {
 
   const handleClick = (e) => {
     setSuggestions([]);
-    setValue(e.target.innerText);
+    setValue(e.target.innerText.toUpperCase());
     setSuggestionsActive(false);
   };
 
@@ -48,6 +48,13 @@ export const AutoComplete = () => {
     }
   };
 
+  useEffect(() => {
+    if (clear) {
+      setValue("");
+      setClear(false);
+    }
+  }, [clear]);
+
   const Suggestions = () => {
     return (
       <ul className="suggestions">
@@ -64,7 +71,17 @@ export const AutoComplete = () => {
 
   return (
     <div className="autocomplete">
-      <input type="text" value={value} onChange={handleChange} onKeyDown={handleKeyDown} name="guess" placeholder="Country, territory..." />
+      <input
+        onSubmit={() => {
+          console.log("submit");
+        }}
+        type="text"
+        value={value}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        name="guess"
+        placeholder="Country, territory..."
+      />
       {suggestionsActive && <Suggestions />}
     </div>
   );
