@@ -8,7 +8,7 @@ export function Alert({ message, duration = 1000, type }) {
     setTimeout(() => {
       setHidden(true);
     }, duration);
-  }, []);
+  }, [duration]);
 
   return (
     <div
@@ -35,6 +35,12 @@ export function Alert({ message, duration = 1000, type }) {
             return (
               <svg viewBox="0 0 24 24" width="100%" height="100%" fill="#07bc0c">
                 <path d="M12 0a12 12 0 1012 12A12.014 12.014 0 0012 0zm6.927 8.2l-6.845 9.289a1.011 1.011 0 01-1.43.188l-4.888-3.908a1 1 0 111.25-1.562l4.076 3.261 6.227-8.451a1 1 0 111.61 1.183z"></path>
+              </svg>
+            );
+          default:
+            return (
+              <svg viewBox="0 0 24 24" width="100%" height="100%" fill="#3498db">
+                <path d="M12 0a12 12 0 1012 12A12.013 12.013 0 0012 0zm.25 5a1.5 1.5 0 11-1.5 1.5 1.5 1.5 0 011.5-1.5zm2.25 13.5h-4a1 1 0 010-2h.75a.25.25 0 00.25-.25v-4.5a.25.25 0 00-.25-.25h-.75a1 1 0 010-2h1a2 2 0 012 2v4.75a.25.25 0 00.25.25h.75a1 1 0 110 2z"></path>
               </svg>
             );
         }

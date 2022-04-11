@@ -4,11 +4,12 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 #app svg {
   width: auto;
-  max-height: min(25vh, 225px);
+  height: 100%;
 }
 
 #app header {
@@ -16,11 +17,21 @@
   width: 100%;
   justify-content: space-between;
   align-items: center;
+  margin-top: -10px;
   border-bottom: 2px solid var(--gray-200);
   margin-bottom: 25px;
 }
 
-#app header div {
+#app header button {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  height: 20px;
+  padding: 0;
+  display: flex;
+}
+
+#app header > div {
   display: flex;
 }
 
@@ -45,10 +56,29 @@
   text-transform: uppercase;
   font-size: 2.25rem;
   letter-spacing: 2px;
+  margin-bottom: -15px;
+  margin-top: 10px;
 }
 
-#app header h1 span {
+#app header .logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#app header h2 {
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+}
+
+.accent {
   color: var(--accent);
+  margin: 0 !important;
+}
+
+hr ~ hr {
+  margin-top: 15px;
 }
 
 .alert-container {
@@ -90,9 +120,99 @@
   opacity: 0;
 }
 
+#modal {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: hsl(0, 0%, 100%);
+  z-index: 100;
+}
+
+#modal header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 !important;
+  margin-bottom: 10px !important;
+  padding-block: 5px;
+}
+
+#modal .close-btn {
+  position: absolute;
+  right: 0;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15px;
+  height: 15px;
+  padding: 0;
+}
+
+#modal .close-btn img {
+  width: 100%;
+  height: 100%;
+}
+
+#modal .content > p {
+  margin-bottom: 10px;
+  font-size: 0.9em;
+}
+
+#modal .content > p img {
+  height: 0.9em;
+  display: inline;
+  margin-left: 2px;
+}
+
+#modal .guess-row:first-of-type {
+  margin-top: 10px;
+}
+
+#modal .guess-row {
+  margin-bottom: 10px;
+}
+
+#modal select {
+  color: inherit;
+  font-family: inherit;
+  font-size: 100%;
+  line-height: inherit;
+  margin: 0;
+  padding: 0;
+  border: 0 solid #e5e7eb;
+  height: 2rem;
+  margin-right: 10px;
+  width: 65px;
+}
+
+#modal .difficulty {
+  margin-top: 30px;
+}
+
+#modal .difficulty span {
+  color: hsl(220, 9%, 46%);
+  font-size: 0.9em;
+  display: block;
+  margin-bottom: 10px;
+}
+
+#modal .difficulty > div {
+  margin-bottom: 5px;
+}
+
+#modal .difficulty > div label {
+  margin-left: 5px;
+}
+
 .country {
   width: 100%;
-  height: fit-content;
+  height: min(25vh, 225px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -114,7 +234,7 @@
   margin-bottom: 0.5em;
 }
 
-.guess-grid > div.blank-guess-row {
+div.blank-guess-row {
   background-color: var(--gray-200);
   height: 30px;
   padding: 1em;
@@ -122,28 +242,28 @@
   border-radius: 5px;
 }
 
-.guess-grid > div.guess-row.animated {
+div.guess-row.animated {
   grid-template-columns: 6fr 1fr;
 }
 
-.guess-grid > div.guess-row.animated > :first-child {
+div.guess-row.animated > :first-child {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
 }
 
-.guess-grid > div.guess-row.animated .square {
+div.guess-row.animated .square {
   -webkit-animation: reveal 0.2s forwards;
   animation: reveal 0.2s forwards;
   opacity: 0;
   user-select: none;
 }
 
-.guess-grid > div.guess-row.animated > :first-child img {
+div.guess-row.animated > :first-child img {
   height: 25px;
 }
 
-.guess-grid > div.guess-row {
+div.guess-row {
   background-color: transparent;
   min-height: 32px;
   width: 100%;
@@ -154,11 +274,11 @@
   gap: 5px;
 }
 
-.guess-grid > div.guess-row img {
+div.guess-row img {
   height: 15px;
 }
 
-.guess-grid > div.guess-row > div {
+div.guess-row > div {
   border: 2px solid var(--gray-200);
   height: 100%;
   border-radius: 5px;
@@ -168,12 +288,12 @@
   align-items: center;
 }
 
-.guess-grid > div.guess-row > div:first-of-type {
+div.guess-row > div:first-of-type {
   text-transform: uppercase;
   overflow: hidden;
 }
 
-.guess-grid > div.guess-row > div:first-of-type p {
+div.guess-row > div:first-of-type p {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -282,6 +402,18 @@
   text-decoration: underline;
   margin-left: 10px;
   cursor: pointer;
+}
+
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: auto;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
 }
 
 @-webkit-keyframes reveal {

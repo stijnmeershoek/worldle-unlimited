@@ -39,3 +39,11 @@ body.dark {
   width: 1px;
   white-space: nowrap;
 }
+
+hr {
+  border: none;
+  height: 2px;
+  color: var(--gray-200);
+  background-color: var(--gray-200);
+  margin-bottom: 15px;
+}

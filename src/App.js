@@ -8,15 +8,20 @@ import { Icon } from "./components/Icon";
 import { AutoComplete } from "./components/AutoComplete";
 import { GuessRow } from "./components/GuessRow";
 import { Alert } from "./components/Alert";
+import { Info } from "./components/panels/Info";
+import { Settings } from "./components/panels/Settings";
 
 export default function App() {
+  const MAX_DISTANCE_ON_EARTH = 20_000_000;
+  const MAX_TRIES = 6;
   const { country } = useAppState();
   const [finished, setFinished] = useState(false);
   const [alerts, setAlerts] = useState([]);
   const [guesses, addGuess] = useState([]);
   const [clear, setClear] = useState(false);
-  const MAX_DISTANCE_ON_EARTH = 20_000_000;
-  const MAX_TRIES = 6;
+
+  const [infoOpen, setInfoOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const submitGuess = (e) => {
     e.preventDefault();
@@ -72,25 +77,56 @@ export default function App() {
           return <Alert message={alert.message} duration={alert.duration} type={alert.type} />;
         })}
       </div>
+      <Info
+        isOpen={infoOpen}
+        close={() => {
+          setInfoOpen(false);
+        }}
+      />
+      <Settings
+        isOpen={settingsOpen}
+        close={() => {
+          setSettingsOpen(false);
+        }}
+      />
       <header>
         <div>
-          <Twemoji options={{ className: "twemoji" }}>
-            <span>❓</span>
-          </Twemoji>
-          <Twemoji options={{ className: "twemoji" }}>
-            <span>📲</span>
-          </Twemoji>
+          <button
+            onClick={() => {
+              setInfoOpen(true);
+            }}
+          >
+            <Twemoji noWrapper={true} options={{ className: "twemoji" }}>
+              <span>❓</span>
+            </Twemoji>
+          </button>
+          <button>
+            <Twemoji noWrapper={true} options={{ className: "twemoji" }}>
+              <span>📲</span>
+            </Twemoji>
+          </button>
         </div>
-        <h1>
-          WOR<span>L</span>DLE
-        </h1>
+        <div className="logo">
+          <h1>
+            WOR<span className="accent">L</span>DLE
+          </h1>
+          <span>(unlimited)</span>
+        </div>
         <div>
-          <Twemoji options={{ className: "twemoji" }}>
-            <span>📈</span>
-          </Twemoji>
-          <Twemoji options={{ className: "twemoji" }}>
-            <span>⚙️</span>
-          </Twemoji>
+          <button>
+            <Twemoji noWrapper={true} options={{ className: "twemoji" }}>
+              <span>📈</span>
+            </Twemoji>
+          </button>
+          <button
+            onClick={() => {
+              setSettingsOpen(true);
+            }}
+          >
+            <Twemoji noWrapper={true} options={{ className: "twemoji" }}>
+              <span>⚙️</span>
+            </Twemoji>
+          </button>
         </div>
       </header>
       <div className="country">

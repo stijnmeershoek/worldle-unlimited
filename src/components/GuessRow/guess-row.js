@@ -41,7 +41,7 @@ export function GuessRow({ guess }) {
     NNW: "↖️",
   };
 
-  function generateSquares() {
+  const generateSquares = () => {
     const characters = new Array(5);
     const greenSquareCount = Math.floor(guess.proximity / 20);
     const yellowSquareCount = guess.proximity - greenSquareCount * 20 >= 10 ? 1 : 0;
@@ -51,7 +51,7 @@ export function GuessRow({ guess }) {
     characters.fill("⬜", greenSquareCount + yellowSquareCount);
 
     return characters;
-  }
+  };
 
   switch (animationState) {
     case "NOT_STARTED":
@@ -99,10 +99,12 @@ export function GuessRow({ guess }) {
               </Twemoji>
             )}
           </div>
-          <div style={{ webkitAnimation: "pop .5s ease-out forwards", animation: "pop .5s ease-out forwards" }}>
+          <div style={{ WebkitAnimation: "pop .5s ease-out forwards", animation: "pop .5s ease-out forwards" }}>
             <span>{guess.proximity}%</span>
           </div>
         </div>
       );
+    default:
+      return <div className="blank-guess-row"></div>;
   }
 }

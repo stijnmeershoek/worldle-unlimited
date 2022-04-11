@@ -27,22 +27,22 @@ export const AutoComplete = ({ clear, setClear }) => {
 
   const handleKeyDown = (e) => {
     // UP ARROW
-    if (e.keyCode === 38) {
+    if (e.key === "ArrowUp") {
       if (suggestionIndex === 0) {
         return;
       }
       setSuggestionIndex(suggestionIndex - 1);
     }
     // DOWN ARROW
-    else if (e.keyCode === 40) {
+    else if (e.key === "ArrowDown") {
       if (suggestionIndex - 1 === suggestions.length) {
         return;
       }
       setSuggestionIndex(suggestionIndex + 1);
     }
-    // ENTER
-    else if (e.keyCode === 9) {
-      setValue(suggestions[suggestionIndex].name);
+    // TAB
+    else if (e.key === "Tab") {
+      setValue(suggestions[suggestionIndex].name.toUpperCase());
       setSuggestionIndex(0);
       setSuggestionsActive(false);
     }
@@ -53,7 +53,7 @@ export const AutoComplete = ({ clear, setClear }) => {
       setValue("");
       setClear(false);
     }
-  }, [clear]);
+  }, [clear, setClear]);
 
   const Suggestions = () => {
     return (
@@ -81,6 +81,7 @@ export const AutoComplete = ({ clear, setClear }) => {
         onKeyDown={handleKeyDown}
         name="guess"
         placeholder="Country, territory..."
+        autoComplete="off"
       />
       {suggestionsActive && <Suggestions />}
     </div>
