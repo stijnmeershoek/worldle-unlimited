@@ -7,6 +7,32 @@
   position: relative;
 }
 
+.dark {
+  background-color: hsl(222, 47%, 11%);
+  color: hsl(0, 0%, 100%);
+}
+
+.dark #modal {
+  background-color: hsl(222, 47%, 11%);
+}
+
+.dark select {
+  background-color: hsl(217, 33%, 17%);
+}
+
+.dark .blank-guess-row {
+  background-color: hsl(215, 19%, 35%);
+}
+
+.dark .country svg path {
+  fill: white;
+}
+
+.dark input {
+  background-color: hsl(217, 33%, 17%);
+  border: 2px solid hsl(0, 0%, 100%);
+}
+
 #app svg {
   width: auto;
   height: 100%;
@@ -194,14 +220,15 @@ hr ~ hr {
   width: 65px;
 }
 
+#modal select:first-of-type {
+  margin-bottom: 10px;
+}
+
 #modal .difficulty {
   margin-top: 30px;
 }
 
-#modal .difficulty span {
-  color: hsl(220, 9%, 46%);
-  font-size: 0.9em;
-  display: block;
+#modal .difficulty h3 {
   margin-bottom: 10px;
 }
 
@@ -352,7 +379,7 @@ div.guess-row > div:first-of-type p {
   justify-content: center;
   border: 2px solid var(--gray-200);
   outline: none;
-  background-color: white;
+  background-color: transparent;
   padding: 0.3em;
   border-radius: 5px;
   font-weight: bold;
@@ -476,6 +503,10 @@ div.guess-row > div:first-of-type p {
 @media screen and (max-width: 768px) {
   #app {
     width: 100%;
+  }
+
+  #modal {
+    padding-inline: 10px;
   }
 
   .guesses {

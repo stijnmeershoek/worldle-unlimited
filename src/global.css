@@ -4,13 +4,10 @@
   --accent-hover: hsl(142, 71%, 45%);
   --gray-200: hsl(220, 13%, 91%);
   --font-weight-light: 300;
-  --font-weight-heavy: bold;
+  --font-weight-heavy: 500;
 }
 
 body {
-  /* color */
-  --main: hsl(0, 0%, 100%);
-  --secondary: hsl(0, 0%, 0%);
   font-family: "Outfit", sans-serif;
   background-color: var(--gray-100);
   color: var(--gray-400);
@@ -21,11 +18,6 @@ body {
   justify-content: center;
   align-items: center;
   inset: 0;
-}
-
-body.dark {
-  --main: hsl(0, 0%, 0%);
-  --secondary: hsl(0, 0%, 100%);
 }
 
 .visually-hidden {
@@ -46,4 +38,12 @@ hr {
   color: var(--gray-200);
   background-color: var(--gray-200);
   margin-bottom: 15px;
+}
+
+a {
+  color: var(--gray-400);
+}
+
+.dark a {
+  color: hsl(0, 0%, 100%);
 }

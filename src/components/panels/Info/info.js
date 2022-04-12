@@ -4,7 +4,7 @@ import { GuessRow } from "../../GuessRow";
 import * as geolib from "geolib";
 import Twemoji from "react-twemoji";
 
-export function Info({ isOpen, close }) {
+export function Info({ isOpen, close, settingsData, formatDistance }) {
   const MAX_DISTANCE_ON_EARTH = 20_000_000;
   const guess1 = {
     code: "CL",
@@ -46,24 +46,24 @@ export function Info({ isOpen, close }) {
       <GuessRow
         guess={{
           name: guess1.name,
-          distance: guess1.distance,
+          distance: formatDistance(guess1.distance, settingsData.distanceUnit),
           direction: geolib.getCompassDirection({ latitude: guess1.latitude, longitude: guess1.longitude }, { latitude: country.latitude, longitude: country.longitude }, (origin, dest) => Math.round(geolib.getRhumbLineBearing(origin, dest) / 45) * 45),
           proximity: Math.floor((Math.max(MAX_DISTANCE_ON_EARTH - guess1.distance, 0) / MAX_DISTANCE_ON_EARTH) * 100),
         }}
       />
       <p>
-        Your guess <strong>CHILE</strong> is 13557km away from the target country, the target country is in the North-East direction and you have a only 32% of proximity because it's quite far away!
+        Your guess <strong>{guess1.name}</strong> is {formatDistance(guess1.distance, settingsData.distanceUnit)} away from the target country, the target country is in the North-East direction and you have a only 32% of proximity because it's quite far away!
       </p>
       <GuessRow
         guess={{
           name: guess2.name,
-          distance: guess2.distance,
+          distance: formatDistance(guess2.distance, settingsData.distanceUnit),
           direction: geolib.getCompassDirection({ latitude: guess1.latitude, longitude: guess1.longitude }, { latitude: country.latitude, longitude: country.longitude }, (origin, dest) => Math.round(geolib.getRhumbLineBearing(origin, dest) / 45) * 45),
           proximity: Math.floor((Math.max(MAX_DISTANCE_ON_EARTH - guess2.distance, 0) / MAX_DISTANCE_ON_EARTH) * 100),
         }}
       />
       <p>
-        Your second guess <strong>FINLAND</strong> is getting closer! 3206km away, South-East direction and 83%!
+        Your second guess <strong>FINLAND</strong> is getting closer! {formatDistance(guess2.distance, settingsData.distanceUnit)} away, South-East direction and 83%!
       </p>
       <GuessRow
         guess={{

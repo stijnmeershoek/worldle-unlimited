@@ -86,7 +86,7 @@ export function GuessRow({ guess }) {
             <p>{guess.name}</p>
           </div>
           <div>
-            <span>{Math.floor(guess.distance / 1000)}km</span>
+            <span>{guess.distance}</span>
           </div>
           <div>
             {guess.distance === 0 ? (
