@@ -44,6 +44,10 @@
   margin-bottom: 0;
 }
 
+.dark .alert {
+  background-color: hsl(217, 33%, 17%);
+}
+
 #app svg {
   width: auto;
   height: 100%;
