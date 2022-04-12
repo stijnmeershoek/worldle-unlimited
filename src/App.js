@@ -31,11 +31,13 @@ export default function App() {
     if (guesses.length + 1 === 6 && guessValue.toLowerCase() !== country.name.toLowerCase()) {
       setFinished(true);
       showAlert(country.name.toUpperCase(), null, "failed");
-      const GUESS = {
-        name: guessValue,
-        distance: 0,
-        proximity: 100,
-      };
+      const distance = geolib.getDistance({ latitude: guess.latitude, longitude: guess.longitude }, { latitude: country.latitude, longitude: country.longitude });
+        const GUESS = {
+          name: guessValue,
+          distance: distance,
+          direction: geolib.getCompassDirection({ latitude: guess.latitude, longitude: guess.longitude }, { latitude: country.latitude, longitude: country.longitude }, (origin, dest) => Math.round(geolib.getRhumbLineBearing(origin, dest) / 45) * 45),
+          proximity: Math.floor((Math.max(MAX_DISTANCE_ON_EARTH - distance, 0) / MAX_DISTANCE_ON_EARTH) * 100),
+        };
       addGuess((prev) => [...prev, GUESS]);
       return;
     }

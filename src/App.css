@@ -94,6 +94,7 @@ hr ~ hr {
 }
 
 .alert {
+  min-width: 200px;
   pointer-events: none;
   user-select: none;
   background-color: hsl(0, 0%, 100%);
@@ -104,10 +105,12 @@ hr ~ hr {
   transition: opacity 500ms ease-in-out;
   margin-bottom: 0.5em;
   display: flex;
+  /* justify-content: space-evenly;
+  align-items: center; */
 }
 
 .alert svg {
-  height: 24px;
+  height: 24px !important;
   aspect-ratio: 1;
   margin-right: 20px;
 }
@@ -487,5 +490,7 @@ div.guess-row > div:first-of-type p {
   .alert {
     width: 100%;
     padding-block: 1.5em;
+    justify-content: unset;
+    align-items: unset;
   }
 }
