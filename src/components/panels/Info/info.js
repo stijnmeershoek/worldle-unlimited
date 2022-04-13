@@ -3,8 +3,9 @@ import Panel from "../Panel";
 import { GuessRow } from "../../GuessRow";
 import * as geolib from "geolib";
 import Twemoji from "react-twemoji";
+import { formatDistance } from "../../../globals/geography";
 
-export function Info({ isOpen, close, settingsData, formatDistance }) {
+export function Info({ isOpen, close, settingsData }) {
   const MAX_DISTANCE_ON_EARTH = 20_000_000;
   const guess1 = {
     code: "CL",
@@ -46,7 +47,7 @@ export function Info({ isOpen, close, settingsData, formatDistance }) {
       <GuessRow
         guess={{
           name: guess1.name,
-          distance: formatDistance(guess1.distance, settingsData.distanceUnit),
+          distance: guess1.distance,
           direction: geolib.getCompassDirection({ latitude: guess1.latitude, longitude: guess1.longitude }, { latitude: country.latitude, longitude: country.longitude }, (origin, dest) => Math.round(geolib.getRhumbLineBearing(origin, dest) / 45) * 45),
           proximity: Math.floor((Math.max(MAX_DISTANCE_ON_EARTH - guess1.distance, 0) / MAX_DISTANCE_ON_EARTH) * 100),
         }}
@@ -57,7 +58,7 @@ export function Info({ isOpen, close, settingsData, formatDistance }) {
       <GuessRow
         guess={{
           name: guess2.name,
-          distance: formatDistance(guess2.distance, settingsData.distanceUnit),
+          distance: guess2.distance,
           direction: geolib.getCompassDirection({ latitude: guess1.latitude, longitude: guess1.longitude }, { latitude: country.latitude, longitude: country.longitude }, (origin, dest) => Math.round(geolib.getRhumbLineBearing(origin, dest) / 45) * 45),
           proximity: Math.floor((Math.max(MAX_DISTANCE_ON_EARTH - guess2.distance, 0) / MAX_DISTANCE_ON_EARTH) * 100),
         }}

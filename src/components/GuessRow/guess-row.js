@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Twemoji from "react-twemoji";
 import CountUp from "react-countup";
+import { getDirectionEmoji, generateSquares, formatDistance } from "../../globals/geography";
+import { useAppState } from "../../context/AppContext";
 
 export function GuessRow({ guess }) {
+  const { settingsData } = useAppState();
   const SQUARE_ANIMATION_LENGTH = 250;
   const [squares, setSquares] = useState([]);
   const [animationState, setAnimationState] = useState("NOT_STARTED");
@@ -12,7 +15,7 @@ export function GuessRow({ guess }) {
     if (!guess) {
       return;
     }
-    setSquares(generateSquares());
+    setSquares(generateSquares(guess.proximity, settingsData?.theme));
     setAnimationState("RUNNING");
     const timeout = setTimeout(() => {
       setAnimationState("ENDED");
@@ -20,38 +23,7 @@ export function GuessRow({ guess }) {
     return () => {
       clearTimeout(timeout);
     };
-  }, [guess]);
-
-  const DIRECTION_ARROWS = {
-    N: "⬆️",
-    NNE: "↗️",
-    NE: "↗️",
-    ENE: "↗️",
-    E: "➡️",
-    ESE: "↘️",
-    SE: "↘️",
-    SSE: "↘️",
-    S: "⬇️",
-    SSW: "↙️",
-    SW: "↙️",
-    WSW: "↙️",
-    W: "⬅️",
-    WNW: "↖️",
-    NW: "↖️",
-    NNW: "↖️",
-  };
-
-  const generateSquares = () => {
-    const characters = new Array(5);
-    const greenSquareCount = Math.floor(guess.proximity / 20);
-    const yellowSquareCount = guess.proximity - greenSquareCount * 20 >= 10 ? 1 : 0;
-
-    characters.fill("🟩", 0, greenSquareCount);
-    characters.fill("🟨", greenSquareCount, greenSquareCount + yellowSquareCount);
-    characters.fill("⬜", greenSquareCount + yellowSquareCount);
-
-    return characters;
-  };
+  }, [guess, settingsData]);
 
   switch (animationState) {
     case "NOT_STARTED":
@@ -86,18 +58,12 @@ export function GuessRow({ guess }) {
             <p>{guess.name}</p>
           </div>
           <div>
-            <span>{guess.distance}</span>
+            <span>{formatDistance(guess.distance, settingsData?.distanceUnit)}</span>
           </div>
           <div>
-            {guess.distance === 0 ? (
-              <Twemoji options={{ className: "twemoji" }}>
-                <span>🎉</span>
-              </Twemoji>
-            ) : (
-              <Twemoji options={{ className: "twemoji" }}>
-                <span>{DIRECTION_ARROWS[guess.direction]}</span>
-              </Twemoji>
-            )}
+            <Twemoji options={{ className: "twemoji" }}>
+              <span>{getDirectionEmoji(guess)}</span>
+            </Twemoji>
           </div>
           <div style={{ WebkitAnimation: "pop .5s ease-out forwards", animation: "pop .5s ease-out forwards" }}>
             <span>{guess.proximity}%</span>

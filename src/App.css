@@ -143,7 +143,7 @@ hr ~ hr {
   padding: 1em 2em;
   border-radius: 0.25em;
   opacity: 1;
-  transition: opacity 500ms ease-in-out;
+  transition: opacity 625ms ease-in-out;
   margin-bottom: 0.5em;
   display: flex;
 }
@@ -428,7 +428,7 @@ div.guess-row > div:first-of-type p {
   background-color: var(--accent-hover);
 }
 
-.view-on-maps {
+.view-on {
   margin-top: 25px;
   width: 50%;
   display: flex;
@@ -436,15 +436,76 @@ div.guess-row > div:first-of-type p {
   align-items: center;
 }
 
-.view-on-maps img {
-  height: 24px;
+.view-on + .view-on {
+  margin-top: 10px;
 }
 
-.view-on-maps a {
+.view-on img {
+  height: 20px;
+}
+
+.view-on a {
   color: inherit;
   text-decoration: underline;
   margin-left: 10px;
   cursor: pointer;
+}
+
+.top-stats {
+  margin: auto;
+  width: 75%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.top-stats > div {
+  padding-inline: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.average {
+  font-size: 2.5em;
+  font-weight: bold;
+  display: block;
+  text-align: center;
+}
+
+.average-label {
+  font-size: 1.2em;
+  display: block;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.guess-distribution {
+  margin: 0;
+  padding: 0;
+  margin-inline: 0.25rem;
+  list-style: none;
+}
+
+.guess-distribution > li {
+  display: flex;
+  margin: 0.5rem;
+}
+
+.guess-distribution .index {
+  font-weight: bold;
+  margin-right: 0.25rem;
+  width: 10px;
+}
+
+.guess-distribution .bar {
+  background-color: hsl(215, 20%, 65%);
+}
+.guess-distribution .count {
+  font-weight: bold;
+  padding-inline: 0.25rem;
+  background-color: hsl(215, 20%, 65%);
 }
 
 .visually-hidden {

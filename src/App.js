@@ -11,12 +11,14 @@ import { Share } from "./components/Share";
 import { Alert } from "./components/Alert";
 import { Info } from "./components/panels/Info";
 import { Settings } from "./components/panels/Settings";
-import { useSettings } from "./hooks/useSettings";
+import { Stats } from "./components/panels/Stats";
+import { computeProximityPercent } from "./globals/geography";
+import { useStats } from "./globals/statistics";
+import { InstallPWA } from "./components/InstallPWA/install";
 
 export default function App() {
-  const MAX_DISTANCE_ON_EARTH = 20_000_000;
   const MAX_TRIES = 6;
-  const { country } = useAppState();
+  const { country, settingsData, updateSettings } = useAppState();
   const [finished, setFinished] = useState(false);
   const [alerts, setAlerts] = useState([]);
   const [guesses, addGuess] = useState([]);
@@ -24,8 +26,9 @@ export default function App() {
 
   const [infoOpen, setInfoOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [statsOpen, setStatsOpen] = useState(false);
 
-  const [settingsData, updateSettings] = useSettings();
+  const [statsData, updateStatsData] = useStats();
 
   useEffect(() => {
     if (settingsData.theme === "dark") {
@@ -35,30 +38,34 @@ export default function App() {
     }
   }, [settingsData.theme]);
 
-  const formatDistance = (distanceInMeters, distanceUnit) => {
-    const distanceInKm = distanceInMeters / 1000;
+  useEffect(() => {
+    if (guesses.length === 0 || !statsData || !finished) return;
+    const guessesStats = statsData.guesses;
+    if (guesses[guesses.length - 1]?.distance === 0) {
+      Object.entries(guessesStats).forEach((item, index) => {
+        if (index + 1 === guesses.length) {
+          guessesStats[index + 1] = item[1] + 1;
+        }
+        return;
+      });
+    }
 
-    return distanceUnit === "km" ? `${Math.round(distanceInKm)}km` : `${Math.round(distanceInKm * 0.621371)}mi`;
-  };
+    updateStatsData({
+      gamesPlayed: statsData.gamesPlayed + 1,
+      gamesWon: guesses.length === MAX_TRIES ? statsData.gamesWon : statsData.gamesWon + 1,
+      winPercentage: guesses.length === MAX_TRIES ? (statsData.gamesWon / (statsData.gamesPlayed + 1)) * 100 : ((statsData.gamesWon + 1) / (statsData.gamesPlayed + 1)) * 100,
+      currentStreak: guesses.length === MAX_TRIES ? 0 : statsData.currentStreak + 1,
+      maxStreak: guesses.length === MAX_TRIES ? statsData.maxStreak : statsData.currentStreak + 1 > statsData.maxStreak ? statsData.currentStreak + 1 : statsData.maxStreak,
+      bestDistancesAvg: (statsData.bestDistancesAvg + Math.min(...guesses.map((guess) => guess.distance))) / 2,
+      guesses: guessesStats,
+    });
+  }, [guesses]);
 
   const submitGuess = (e) => {
     e.preventDefault();
     setClear(true);
     const guessValue = e.target.guess.value;
     const guess = countries.filter((country) => country.name.toLowerCase() === guessValue.toLowerCase())[0];
-    if (guesses.length + 1 === 6 && guessValue.toLowerCase() !== country.name.toLowerCase()) {
-      setFinished(true);
-      showAlert(country.name.toUpperCase(), null, "failed");
-      const distance = geolib.getDistance({ latitude: guess.latitude, longitude: guess.longitude }, { latitude: country.latitude, longitude: country.longitude });
-      const GUESS = {
-        name: guessValue,
-        distance: formatDistance(distance, settingsData.distanceUnit),
-        direction: geolib.getCompassDirection({ latitude: guess.latitude, longitude: guess.longitude }, { latitude: country.latitude, longitude: country.longitude }, (origin, dest) => Math.round(geolib.getRhumbLineBearing(origin, dest) / 45) * 45),
-        proximity: Math.floor((Math.max(MAX_DISTANCE_ON_EARTH - distance, 0) / MAX_DISTANCE_ON_EARTH) * 100),
-      };
-      addGuess((prev) => [...prev, GUESS]);
-      return;
-    }
     if (countries.some((country) => country.name.toLowerCase() === guessValue.toLowerCase())) {
       if (guessValue.toLowerCase() === country.name.toLowerCase()) {
         setFinished(true);
@@ -71,12 +78,16 @@ export default function App() {
         addGuess((prev) => [...prev, GUESS]);
         return;
       } else {
+        if (guesses.length + 1 === 6) {
+          setFinished(true);
+          showAlert(country.name.toUpperCase(), null, "failed");
+        }
         const distance = geolib.getDistance({ latitude: guess.latitude, longitude: guess.longitude }, { latitude: country.latitude, longitude: country.longitude });
         const GUESS = {
           name: guessValue,
-          distance: formatDistance(distance, settingsData.distanceUnit),
+          distance: distance,
           direction: geolib.getCompassDirection({ latitude: guess.latitude, longitude: guess.longitude }, { latitude: country.latitude, longitude: country.longitude }, (origin, dest) => Math.round(geolib.getRhumbLineBearing(origin, dest) / 45) * 45),
-          proximity: Math.floor((Math.max(MAX_DISTANCE_ON_EARTH - distance, 0) / MAX_DISTANCE_ON_EARTH) * 100),
+          proximity: computeProximityPercent(distance),
         };
         addGuess((prev) => [...prev, GUESS]);
         return;
@@ -102,7 +113,6 @@ export default function App() {
         close={() => {
           setInfoOpen(false);
         }}
-        formatDistance={formatDistance}
         settingsData={settingsData}
       />
       <Settings
@@ -112,6 +122,14 @@ export default function App() {
         }}
         settingsData={settingsData}
         updateSettings={updateSettings}
+      />
+      <Stats
+        isOpen={statsOpen}
+        close={() => {
+          setStatsOpen(false);
+        }}
+        statsData={statsData}
+        settingsData={settingsData}
       />
       <header>
         <div>
@@ -124,11 +142,7 @@ export default function App() {
               <span>❓</span>
             </Twemoji>
           </button>
-          <button>
-            <Twemoji noWrapper={true} options={{ className: "twemoji" }}>
-              <span>📲</span>
-            </Twemoji>
-          </button>
+          <InstallPWA />
         </div>
         <div className="logo">
           <h1>
@@ -137,7 +151,11 @@ export default function App() {
           <span>(unlimited)</span>
         </div>
         <div>
-          <button>
+          <button
+            onClick={() => {
+              setStatsOpen(true);
+            }}
+          >
             <Twemoji noWrapper={true} options={{ className: "twemoji" }}>
               <span>📈</span>
             </Twemoji>
@@ -180,12 +198,20 @@ export default function App() {
         ) : (
           <>
             <Share guesses={guesses} name={country.name} settingsData={settingsData} hideImageMode={settingsData.noImageMode} rotationMode={settingsData.rotationMode} showAlert={showAlert} />
-            <div className="view-on-maps">
+            <div className="view-on">
               <Twemoji options={{ className: "twemoji" }}>
                 <span>👀</span>
               </Twemoji>
               <a href={`https://www.google.com/maps?q=${country.name}+${country.code.toUpperCase()}`} target="_blank" rel="noopener noreferrer">
                 On Google Maps
+              </a>
+            </div>
+            <div className="view-on">
+              <Twemoji options={{ className: "twemoji" }}>
+                <span>📚</span>
+              </Twemoji>
+              <a href={`https://en.wikipedia.org/wiki/${country.name}`} target="_blank" rel="noopener noreferrer">
+                On Wikipedia
               </a>
             </div>
           </>
