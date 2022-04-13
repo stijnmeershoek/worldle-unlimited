@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/worldle-clone/static/css/main.4ed30a60.css",
-    "main.js": "/worldle-clone/static/js/main.0e463a28.js",
+    "main.js": "/worldle-clone/static/js/main.6c5500bd.js",
     "static/js/4395.70009fd6.chunk.js": "/worldle-clone/static/js/4395.70009fd6.chunk.js",
     "static/js/839.93dfd4b6.chunk.js": "/worldle-clone/static/js/839.93dfd4b6.chunk.js",
     "static/js/8390.4f15ec19.chunk.js": "/worldle-clone/static/js/8390.4f15ec19.chunk.js",
@@ -489,7 +489,7 @@
     "static/media/vector.svg": "/worldle-clone/static/media/vector.90f847ce67f712a201b53e92bf9e4517.svg",
     "index.html": "/worldle-clone/index.html",
     "main.4ed30a60.css.map": "/worldle-clone/static/css/main.4ed30a60.css.map",
-    "main.0e463a28.js.map": "/worldle-clone/static/js/main.0e463a28.js.map",
+    "main.6c5500bd.js.map": "/worldle-clone/static/js/main.6c5500bd.js.map",
     "4395.70009fd6.chunk.js.map": "/worldle-clone/static/js/4395.70009fd6.chunk.js.map",
     "8390.4f15ec19.chunk.js.map": "/worldle-clone/static/js/8390.4f15ec19.chunk.js.map",
     "8468.b8c23bf6.chunk.js.map": "/worldle-clone/static/js/8468.b8c23bf6.chunk.js.map",
@@ -735,6 +735,6 @@
   },
   "entrypoints": [
     "static/css/main.4ed30a60.css",
-    "static/js/main.0e463a28.js"
+    "static/js/main.6c5500bd.js"
   ]
 }
