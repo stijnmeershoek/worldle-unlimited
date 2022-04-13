@@ -24,11 +24,8 @@ export const InstallPWA = () => {
     }
     promptInstall.prompt();
   };
-  if (!supportsPWA) {
-    return null;
-  }
   return (
-    <button onClick={onClick}>
+    <button onClick={supportsPWA ? onClick : null}>
       <Twemoji noWrapper={true} options={{ className: "twemoji" }}>
         <span>📲</span>
       </Twemoji>
