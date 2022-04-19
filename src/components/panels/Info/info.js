@@ -81,7 +81,7 @@ export function Info({ isOpen, close, settingsData }) {
       </p>
       <hr />
       <p>
-        <strong>To try another WORLDLE just refresh the page!</strong>
+        <strong>To try another WORLDLE just hit the play again button or refresh the page!</strong>
       </p>
       <hr />
       <p>
