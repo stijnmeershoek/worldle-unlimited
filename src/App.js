@@ -18,10 +18,10 @@ import { InstallPWA } from "./components/InstallPWA/install";
 
 export default function App() {
   const MAX_TRIES = 6;
-  const { country, settingsData, updateSettings } = useAppState();
+  const { country, settingsData, updateSettings, generateCountry } = useAppState();
   const [finished, setFinished] = useState(false);
   const [alerts, setAlerts] = useState([]);
-  const [guesses, addGuess] = useState([]);
+  const [guesses, setGuesses] = useState([]);
   const [clear, setClear] = useState(false);
 
   const [infoOpen, setInfoOpen] = useState(false);
@@ -29,6 +29,13 @@ export default function App() {
   const [statsOpen, setStatsOpen] = useState(false);
 
   const [statsData, updateStatsData] = useStats();
+
+  function playAgain() {
+    setFinished(false);
+    setAlerts([]);
+    setGuesses([]);
+    generateCountry();
+  }
 
   useEffect(() => {
     if (settingsData.theme === "dark") {
@@ -75,7 +82,7 @@ export default function App() {
           proximity: 100,
         };
         showAlert("Well Done!", null, "correct");
-        addGuess((prev) => [...prev, GUESS]);
+        setGuesses((prev) => [...prev, GUESS]);
         return;
       } else {
         if (guesses.length + 1 === 6) {
@@ -89,7 +96,7 @@ export default function App() {
           direction: geolib.getCompassDirection({ latitude: guess.latitude, longitude: guess.longitude }, { latitude: country.latitude, longitude: country.longitude }, (origin, dest) => Math.round(geolib.getRhumbLineBearing(origin, dest) / 45) * 45),
           proximity: computeProximityPercent(distance),
         };
-        addGuess((prev) => [...prev, GUESS]);
+        setGuesses((prev) => [...prev, GUESS]);
         return;
       }
     } else {
@@ -198,6 +205,9 @@ export default function App() {
         ) : (
           <>
             <Share guesses={guesses} name={country.name} settingsData={settingsData} hideImageMode={settingsData.noImageMode} rotationMode={settingsData.rotationMode} showAlert={showAlert} />
+            <button className="play-again-button" onClick={playAgain}>
+              Play Again
+            </button>
             <div className="view-on">
               <Twemoji options={{ className: "twemoji" }}>
                 <span>👀</span>

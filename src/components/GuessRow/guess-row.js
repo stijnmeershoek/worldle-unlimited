@@ -25,6 +25,7 @@ export function GuessRow({ guess }) {
     };
   }, [guess, settingsData]);
 
+  if (!guess) return <div className="blank-guess-row"></div>;
   switch (animationState) {
     case "NOT_STARTED":
       return <div className="blank-guess-row"></div>;

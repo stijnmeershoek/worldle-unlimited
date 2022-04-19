@@ -33,14 +33,15 @@ export function AppProvider({ children }) {
     [settingsData]
   );
 
+  async function generateCountry() {
+    const randomCountry = countriesWithImage[Math.floor(Math.random() * countriesWithImage.length)];
+    setCountry(randomCountry);
+    setLoading(false);
+  }
+
   useEffect(() => {
-    async function generateCountry() {
-      const randomCountry = countriesWithImage[Math.floor(Math.random() * countriesWithImage.length)];
-      setCountry(randomCountry);
-      setLoading(false);
-    }
     generateCountry();
   }, []);
 
-  return <AppContext.Provider value={{ country, settingsData, updateSettings }}>{loading ? <></> : children}</AppContext.Provider>;
+  return <AppContext.Provider value={{ country, settingsData, updateSettings, generateCountry }}>{loading ? <></> : children}</AppContext.Provider>;
 }

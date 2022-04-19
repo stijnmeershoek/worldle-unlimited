@@ -20,8 +20,15 @@
   background-color: hsl(217, 33%, 17%);
 }
 
-.dark .blank-guess-row {
+.dark .blank-guess-row,
+.dark .play-again-button {
   background-color: hsl(215, 19%, 35%);
+}
+
+.dark .play-again-button:hover,
+.dark .play-again-button:focus-visible {
+  color: white;
+  background-color: hsl(215, 19%, 44%);
 }
 
 .dark .country svg path {
@@ -70,6 +77,12 @@
   height: 20px;
   padding: 0;
   display: flex;
+  transition: transform 75ms ease-in-out;
+}
+
+#app header button:hover,
+#app header button:focus-visible {
+  transform: scale(1.15);
 }
 
 #app header > div {
@@ -411,7 +424,8 @@ div.guess-row > div:first-of-type p {
   margin-right: 5px;
 }
 
-.share-button {
+.share-button,
+.play-again-button {
   background-color: var(--accent);
   text-transform: uppercase;
   width: 100%;
@@ -423,9 +437,20 @@ div.guess-row > div:first-of-type p {
   height: 32px;
 }
 
+.play-again-button {
+  color: unset;
+  background-color: var(--gray-200);
+  margin-top: 0.25em;
+}
+
 .share-button:hover,
 .share-button:focus-visible {
   background-color: var(--accent-hover);
+}
+
+.play-again-button:hover,
+.play-again-button:focus-visible {
+  background-color: var(--gray-hover);
 }
 
 .view-on {
@@ -506,18 +531,6 @@ div.guess-row > div:first-of-type p {
   font-weight: bold;
   padding-inline: 0.25rem;
   background-color: hsl(215, 20%, 65%);
-}
-
-.visually-hidden {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: auto;
-  margin: 0;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-  white-space: nowrap;
 }
 
 @-webkit-keyframes reveal {

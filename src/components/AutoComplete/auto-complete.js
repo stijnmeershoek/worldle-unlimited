@@ -51,6 +51,7 @@ export const AutoComplete = ({ clear, setClear }) => {
   useEffect(() => {
     if (clear) {
       setValue("");
+      setSuggestionsActive(false);
       setClear(false);
     }
   }, [clear, setClear]);

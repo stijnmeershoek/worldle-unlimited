@@ -3,14 +3,13 @@
   --accent: hsl(142, 76%, 36%);
   --accent-hover: hsl(142, 71%, 45%);
   --gray-200: hsl(220, 13%, 91%);
+  --gray-hover: hsl(220, 13%, 94%);
   --font-weight-light: 300;
   --font-weight-heavy: 500;
 }
 
 body {
   font-family: "Outfit", sans-serif;
-  background-color: var(--gray-100);
-  color: var(--gray-400);
   font-weight: var(--font-weight-light);
   overflow: hidden;
   position: absolute;
@@ -30,6 +29,7 @@ body {
   position: absolute;
   width: 1px;
   white-space: nowrap;
+  display: none;
 }
 
 hr {
@@ -41,7 +41,7 @@ hr {
 }
 
 a {
-  color: var(--gray-400);
+  color: hsl(0, 0%, 0%);
 }
 
 .dark a {
