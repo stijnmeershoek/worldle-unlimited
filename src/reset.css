@@ -59,10 +59,6 @@ svg {
   display: block;
 }
 
-img:not([alt]) {
-  filter: blur(10px);
-}
-
 /* Inherit fonts for inputs and buttons */
 input,
 button,

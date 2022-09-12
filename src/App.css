@@ -21,18 +21,21 @@
 }
 
 .dark .blank-guess-row,
-.dark .play-again-button {
+.dark .play-again-button,
+.dark .skip-button {
   background-color: hsl(215, 19%, 35%);
 }
 
 .dark .play-again-button:hover,
-.dark .play-again-button:focus-visible {
+.dark .play-again-button:focus-visible,
+.dark .skip-button:hover,
+.dark .skip-button:focus-visible {
   color: white;
   background-color: hsl(215, 19%, 44%);
 }
 
-.dark .country svg path {
-  fill: white;
+.dark .country  {
+  filter: invert(1);
 }
 
 .dark input {
@@ -123,6 +126,12 @@
 #app header h2 {
   text-transform: uppercase;
   font-size: 1.5rem;
+  letter-spacing: 1px;
+}
+
+#app header .logo > span {
+  text-transform: uppercase;
+  font-weight: bold;
   letter-spacing: 1px;
 }
 
@@ -275,6 +284,10 @@ hr ~ hr {
   margin-bottom: 25px;
 }
 
+.country img {
+  max-height: 100%;
+}
+
 .guesses {
   flex-grow: 1;
   display: flex;
@@ -373,7 +386,7 @@ div.guess-row > div:first-of-type p {
   padding: 0.3em;
   border: 2px solid var(--gray-200);
   border-radius: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 0.25em;
   cursor: text;
 }
 
@@ -424,6 +437,23 @@ div.guess-row > div:first-of-type p {
   margin-right: 5px;
 }
 
+.skip-button {
+  text-transform: uppercase;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  outline: none;
+  color: unset;
+  background-color: var(--gray-200);
+  margin-top: 0.5em;
+  font-weight: bold;
+  padding: 0.3em;
+  border-radius: 5px;
+  height: 32px;
+}
+
 .share-button,
 .play-again-button {
   background-color: var(--accent);
@@ -449,7 +479,9 @@ div.guess-row > div:first-of-type p {
 }
 
 .play-again-button:hover,
-.play-again-button:focus-visible {
+.play-again-button:focus-visible,
+.skip-button:hover,
+.skip-button:focus-visible {
   background-color: var(--gray-hover);
 }
 
