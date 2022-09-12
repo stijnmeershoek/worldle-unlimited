@@ -35,7 +35,6 @@ export function AppProvider({ children }) {
 
   async function generateCountry() {
     const randomCountry = countriesWithImage[~~(countriesWithImage.length * Math.random())];
-    console.log(randomCountry)
     setCountry(randomCountry);
     setLoading(false);
   }

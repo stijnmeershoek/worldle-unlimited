@@ -10,5 +10,5 @@ export const Icon = ({ name, settingsData, ...rest }) => {
     return 1 / (Math.cos(radianAngle) * Math.sqrt(2));
   }, [randomAngle]);
 
-  return <img src={`/images/countries/${name}/vector.svg`} alt="country image" {...rest} style={settingsData.rotationMode ? { transform: `rotate(${randomAngle}deg) scale(${imageScale})` } : {}} />;
+  return <img src={`${import.meta.env.BASE_URL}/images/countries/${name}/vector.svg`} alt="country image" {...rest} style={settingsData.rotationMode ? { transform: `rotate(${randomAngle}deg) scale(${imageScale})` } : {}} />;
 };
