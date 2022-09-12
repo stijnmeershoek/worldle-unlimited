@@ -1,5 +1,6 @@
 {
   "name": "worldle-unlimited",
+<<<<<<< HEAD
   "private": true,
   "type": "module",
   "version": "0.1.0",
@@ -10,6 +11,11 @@
     "build": "vite build",
     "test": "vite preview"
   },
+=======
+  "version": "0.1.0",
+  "homepage": "https://stijnmeershoek.github.io/worldle-unlimited",
+  "private": true,
+>>>>>>> 683dc9c55c4fa43d3c3362c4cc16b5a20fe0a76b
   "dependencies": {
     "copy-to-clipboard": "^3.3.2",
     "geolib": "^3.3.3",
